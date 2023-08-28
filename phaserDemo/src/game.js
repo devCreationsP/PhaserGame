@@ -1,87 +1,86 @@
+// Definición de la clase Game que extiende Phaser.Scene
 export class Game extends Phaser.Scene{
     constructor() {
         super({key: 'game'});
 
     }
+    // Precarga de recursos
     preload(){
+        // Cargar imágenes y hojas de sprites
         this.load.image("sky", "./assets/sky.png");
         this.load.image("bomb", "./assets/bomb.png");
-        this.load.image("dude", "./assets/dude.png");
+        this.load.spritesheet("dude", "./assets/dude.png",{ frameWidth: 32, frameHeight: 48 });
         this.load.image("platform", "./assets/platform.png");
         this.load.image("star", "./assets/star.png");
     }
+
+      // Creación de elementos al inicio del juego
     create(){
+
+        // Agregar una imagen de fondo
         this.add.image(400, 300, "sky");
-        this.add.image(500, 90, "star");
-        this.add.image(150, 80, "dude");
-        /**
-         * con esta linea de codigo consigo que el elmento no se salga de la pantalla
-         * y permanezca dentro del campo visual
-         */
-        this.physics.world.setBoundsCollision(true, true, true, false);
 
-        /**
-         * con el metodo physiscs nos permite manipular
-         *  la imagen para asignarle acciones
-         * el metodo setInmovable nos permitira dejar fijo el elemnto
-         * evitando algun desplazamiento cuando ocurra alguna colision
-        */
-        this.ball = this.physics.add.image(400, 90, "bomb");
-        
-        /**
-         * con esta linea de codigo el elemento colisionara con los vorder
-         * del entorno del juego
-         */
-        this.ball.setCollideWorldBounds(true);
-        this.platform = this.physics.add.image(400, 500, "platform").setImmovable();
-        this.platform.body.allowGravity = false;
+        // Crear un grupo estático de plataformas
+        this.platform = this.physics.add.staticGroup();
+        this.platform.create(400, 568, "platform").setImmovable().setScale(2).refreshBody();
+        this.platform.create(600, 400, "platform");
+        this.platform.create(50, 250, "platform");
+        this.platform.create(750, 220, "platform");
 
-        /**
-         * aca creo una variable que me permite asignarle posiciones y velocidad
-         * aleatoria al elemento cada vez que se reinicie la pagina
-         */
-        let velocity = 100 * Phaser.Math.Between(1.3, 2);
-        if(Phaser.Math.Between(0, 10) > 5){
-            velocity = 0 - velocity;
-        }
-        this.ball.setVelocity(velocity, 10);
+        // Agregar al jugador como un sprite físico
+        this.player = this.physics.add.sprite(100, 450, "dude");
+        this.player.setCollideWorldBounds();
+        this.player.setBounce(0.3);
 
-        /**
-         * con el metodo collider conseguimos programar colisiones,
-         * dentro le asignamos los elementos que queremos que colisionen 
-        */
-        this.physics.add.collider(this.ball, this.platform);
+        // Crear animaciones para el jugador derecha izquierda y estatico
+        this.anims.create({
+            key: "left",
+            frames: this.anims.generateFrameNumbers("dude",{ start: 0, end: 3}),
+            frameRete: 10,
+            repeat: -1
+        });
 
-        /**
-         * el metodo setBounce nos permitira generar el rebote al
-         * momento en el que sucede la colicion
-         */
+        this.anims.create({
+            key: "turn",
+            frames: [{key: "dude", frame: 4}],
+            frameRete: 20,
+        });
 
-        this.ball.setBounce(0.8);
-        /**
-         * el metodo keyboard nos permite interactuar
-         *  con los elementos que le asignemos
-        */
+        this.anims.create({
+            key: "right",
+            frames: this.anims.generateFrameNumbers("dude",{ start: 5, end: 8}),
+            frameRete: 10,
+            repeat: -1
+        });
+
+        //con esta linea de codigo se le da gravedad al elemento que se escoja
+        // this.player.body.setGravityY(1000);
+
+        // Agregar colisión entre el jugador y las plataformas
+        this.physics.add.collider(this.player, this.platform);
+        // Crear cursores para el control del jugador
         this.cursors = this.input.keyboard.createCursorKeys();
+    }   
 
-        
-    }
-    update(time, delta){
+    // Actualización del juego en cada fotograma
+    update(){
+
+        // Control del jugador basado en las teclas
         if(this.cursors.left.isDown){
-            this.platform.setVelocityX(-500);
+            this.player.setVelocityX(-160);
+            this.player.anims.play('left', true);
         }else if(this.cursors.right.isDown){
-            this.platform.setVelocityX(500);
-        }
-        else{
-            this.platform.setVelocityX(0);
-        }
-
-        if(this.ball.y > 500){
-            console.log('fin');
-            this.scene.pause();
+            this.player.setVelocityX(160);
+            this.player.anims.play('right', true);
+        }else{
+            this.player.setVelocityX(0);
+            this.player.anims.play('turn');
         }
 
-
+        // Salto del jugador si está en el suelo y se presiona la tecla de arriba
+        if(this.cursors.up.isDown && this.player.body.touching.down){
+            this.player.setVelocityY(-330);
+        }
     }
     
 }
