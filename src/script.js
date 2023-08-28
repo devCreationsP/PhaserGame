@@ -19,6 +19,8 @@ const config = {
     }
 }
 
+var score = 0;
+var scoreText = '';
 // Crear una nueva instancia del juego con la configuración proporcionada
 var game = new Phaser.Game(config);
 
