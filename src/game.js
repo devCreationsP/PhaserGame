@@ -5,6 +5,7 @@ export class Game extends Phaser.Scene{
         this.score = 0;
         this.scoreText;
         this.gameOver = false;
+        this.moveCam = false;
     }
     // Precarga de recursos
     preload(){
@@ -14,20 +15,23 @@ export class Game extends Phaser.Scene{
         this.load.spritesheet("dude", "./assets/dude.png",{ frameWidth: 32, frameHeight: 48 });
         this.load.image("platform", "./assets/platform.png");
         this.load.image("star", "./assets/star.png");
+        this.load.image("question", "./assets/Interrogante.png");
     }
 
       // Creación de elementos al inicio del juego
     create(){
 
         // Agregar una imagen de fondo
-        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "sky").setScale(4);
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
-        this.platform.create(400, 568, "platform").setImmovable().setScale(2).refreshBody();
+        this.platform.create(400, 568, "platform").setScale(8, 2).refreshBody();
         this.platform.create(600, 400, "platform");
         this.platform.create(50, 250, "platform");
         this.platform.create(750, 220, "platform");
+        this.platform.create(1200, 400, "platform");
+        this.platform.create(1400, 200, "platform");
 
         // Agregar al jugador como un sprite físico
         this.player = this.physics.add.sprite(100, 450, "dude");
@@ -66,7 +70,7 @@ export class Game extends Phaser.Scene{
         // Creacion de grupo de estrellas
         this.stars = this.physics.add.group({
             key: 'star',
-            repeat: 11,
+            repeat: 20,
             setXY: {x: 12, y:0, stepX: 70}
         })
         // Función para que las estrellas tengan el efecto Bounce
@@ -92,6 +96,15 @@ export class Game extends Phaser.Scene{
          
         // Función de collisión de personaje con bomba
         this.physics.add.collider(this.player, this.bombs, (player, bomb) => this.hitBomb(player, bomb))
+
+        //Camare que sigue al personaje
+        this.cameras.main.startFollow(this.player, true);
+
+        //Interrogante para las preguntas
+        this.question = this.physics.add.staticGroup();
+        this.platform.create(350, 400, "question").setScale(0.1);
+        this.physics.add.collider(this.player, this.question);
+
     }   
     // Actualización del juego en cada fotograma
     update(){
@@ -100,16 +113,21 @@ export class Game extends Phaser.Scene{
             return
         }
         // Control del jugador basado en las teclas
+        const cam = this.cameras.main;
+
         if(this.cursors.left.isDown){
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
+            cam.scrollX -= 4;
         }else if(this.cursors.right.isDown){
             this.player.setVelocityX(160);
             this.player.anims.play('right', true);
+            cam.scrollX += 4;
         }else{
             this.player.setVelocityX(0);
             this.player.anims.play('turn');
         }
+
 
         // Salto del jugador si está en el suelo y se presiona la tecla de arriba
         if(this.cursors.up.isDown && this.player.body.touching.down){

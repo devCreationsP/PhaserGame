@@ -3,8 +3,8 @@ import {Game} from './game';
 
 // Configuración del juego
 const config = {
-    width: 800,
-    height: 600,
+    width: 1600,
+    height: 800,
     parent: "container",
     type: Phaser.AUTO,
     scene: [Game], // Escena del juego es una instancia de la clase Game
