@@ -177,7 +177,7 @@ class Game1 extends Phaser.Scene{
 
     hitQuestion(player, question){
         question.disableBody(true, true)
-        this.scene.launch('Question');
+        this.scene.launch('Prueba');
         
     }
     createRandomQuestion() {
