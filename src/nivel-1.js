@@ -1,5 +1,5 @@
 // Definición de la clase Game que extiende Phaser.Scene
-export class Game extends Phaser.Scene{
+class Game1 extends Phaser.Scene{
     constructor() {
         super({key: 'game'});
         this.score = 0;
@@ -10,23 +10,23 @@ export class Game extends Phaser.Scene{
     // Precarga de recursos
     preload(){
         // Cargar imágenes y hojas de sprites
-        this.load.image("sky", "./assets/Nivel-I.jpg");
+        this.load.image("sky", "./assets/Nivel-i.png");
         this.load.image("bomb", "./assets/bomb.png");
         this.load.spritesheet("dude", "./assets/prueba2-removebg.png",{ frameWidth: 32, frameHeight: 48 });
         this.load.image("platform", "./assets/platform.png");
         this.load.image("star", "./assets/star.png");
-        this.load.image("question", "./assets/Interrogante.png");
+        this.load.image("question", "./assets/quest.png");
     }
 
       // Creación de elementos al inicio del juego
     create(){
 
         // Agregar una imagen de fondo
-        this.add.image(400, 300, "sky").setScale(0.5);
+        this.add.image(0, 300, "sky").setScale(4,2);
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
-        this.platform.create(400, 568, "platform").setScale(8, 2).refreshBody();
+        this.platform.create(400, 568, "platform").setScale(12, 2).refreshBody();
         this.platform.create(600, 400, "platform");
         this.platform.create(50, 250, "platform");
         this.platform.create(750, 220, "platform");
@@ -34,7 +34,7 @@ export class Game extends Phaser.Scene{
         this.platform.create(1400, 200, "platform");
 
         // Agregar al jugador como un sprite físico
-        this.player = this.physics.add.sprite(200, 450, "dude");
+        this.player = this.physics.add.sprite(200, 450, "dude").setScale(1.2);
         this.player.setCollideWorldBounds();
         this.player.setBounce(0.3);
 
@@ -102,8 +102,12 @@ export class Game extends Phaser.Scene{
 
         //Interrogante para las preguntas
         this.question = this.physics.add.staticGroup();
-        this.platform.create(350, 400, "question").setScale(0.1);
-        this.physics.add.collider(this.player, this.question);
+        // Configura el temporizador para crear preguntas aleatorias cada 30 segundos
+        this.timer = setInterval(() => {
+            this.createRandomQuestion();
+        }, 30000); // 30 segundos en milisegundos = 30000
+
+        this.physics.add.collider(this.player, this.question, (player, question) => this.hitQuestion(player, question));
 
     }   
     // Actualización del juego en cada fotograma
@@ -170,9 +174,20 @@ export class Game extends Phaser.Scene{
 
         this.gameOver = true;
     }
+
+    hitQuestion(player, question){
+        question.disableBody(true, true)
+        this.scene.launch('Question');
+        
+    }
+    createRandomQuestion() {
+        const randomX = Math.random() * 1000; // Reemplaza "tuAncho" con el ancho de tu área de juego
+        const randomY = Math.random() * 500; // Reemplaza "tuAlto" con el alto de tu área de juego
+        this.question.create(randomX, randomY, "question").setScale(4);
+      }
 }
 
-
+export default Game1;
 
 
 
