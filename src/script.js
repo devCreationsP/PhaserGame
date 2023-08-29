@@ -1,6 +1,6 @@
 // Importa la clase 'Game' desde el archivo game.js
 import  Game1  from './nivel-1';
-import {Prueba} from './prueba'
+import {Pregunta} from './prueba'
 
 // Configuración del juego
 const config = {
@@ -8,7 +8,7 @@ const config = {
     height: 1080,
     parent: "container",
     type: Phaser.AUTO,
-    scene: [Game1,Prueba], // Escena del juego es una instancia de la clase Game
+    scene: [Game1,Pregunta], // Escena del juego es una instancia de la clase Game
     physics: {
         default: 'arcade',
         arcade: {

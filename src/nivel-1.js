@@ -98,7 +98,9 @@ class Game1 extends Phaser.Scene{
         this.physics.add.collider(this.player, this.bombs, (player, bomb) => this.hitBomb(player, bomb))
 
         //Camare que sigue al personaje
-        this.cameras.main.startFollow(this.player, true);
+        this.cameras.main.startFollow(this.player, true, 0.1, 0);
+        //Camara fija en el eje y
+        this.initialCameraY = this.cameras.main.centerY;
 
         //Interrogante para las preguntas
         this.question = this.physics.add.staticGroup();
@@ -177,7 +179,7 @@ class Game1 extends Phaser.Scene{
 
     hitQuestion(player, question){
         question.disableBody(true, true)
-        this.scene.launch('Prueba');
+        this.scene.launch('Pregunta');
         
     }
     createRandomQuestion() {
