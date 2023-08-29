@@ -10,9 +10,9 @@ export class Game extends Phaser.Scene{
     // Precarga de recursos
     preload(){
         // Cargar imágenes y hojas de sprites
-        this.load.image("sky", "./assets/sky.png");
+        this.load.image("sky", "./assets/Nivel-I.jpg");
         this.load.image("bomb", "./assets/bomb.png");
-        this.load.spritesheet("dude", "./assets/dude.png",{ frameWidth: 32, frameHeight: 48 });
+        this.load.spritesheet("dude", "./assets/prueba2-removebg.png",{ frameWidth: 32, frameHeight: 48 });
         this.load.image("platform", "./assets/platform.png");
         this.load.image("star", "./assets/star.png");
         this.load.image("question", "./assets/Interrogante.png");
@@ -22,7 +22,7 @@ export class Game extends Phaser.Scene{
     create(){
 
         // Agregar una imagen de fondo
-        this.add.image(400, 300, "sky").setScale(4);
+        this.add.image(400, 300, "sky").setScale(3);
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
@@ -34,7 +34,7 @@ export class Game extends Phaser.Scene{
         this.platform.create(1400, 200, "platform");
 
         // Agregar al jugador como un sprite físico
-        this.player = this.physics.add.sprite(100, 450, "dude");
+        this.player = this.physics.add.sprite(200, 450, "dude");
         this.player.setCollideWorldBounds();
         this.player.setBounce(0.3);
 
