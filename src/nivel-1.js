@@ -19,6 +19,7 @@ class Game1 extends Phaser.Scene{
         this.load.image("floor", "./assets/PNivelII y IV.png")
         this.load.image("star", "./assets/star.png");
         this.load.image("question", "./assets/CajaPregunta.png");
+        this.load.image("Nube1", "./assets/Nube1.png");
     }
 
       // Creación de elementos al inicio del juego
@@ -31,26 +32,40 @@ class Game1 extends Phaser.Scene{
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
+
         this.platform.create(0, 850, "floor").setScale(1, 2).refreshBody();
         this.platform.create(400, 850, "floor").setScale(1, 2).refreshBody();
         this.platform.create(800, 850, "floor").setScale(1, 2).refreshBody();
         this.platform.create(1200, 850, "floor").setScale(1, 2).refreshBody();
         this.platform.create(1200, 400, "platform2").setScale(0.7).refreshBody(0.5);
+                 // Crear un grupo para las nubes
+        // this.clouds1 = this.add.staticGroup();
 
-        // const platformPositions = [
-        //     { x: 600, y: 500 },
-        //     { x: 1600, y: 500}
-        //     // Otras posiciones de plataformas aquí...
+        // // Definir las posiciones de las nubes
+        // const cloudPositions1 = [
+        //     { x: 600, y: 300 },
+        //     { x: 830, y: 300 }
         // ];
-        
-        // platformPositions.forEach(position => {
-        //     const platform = this.platforms.create(position.x, position.y, "platform4").setScale(0.7);
-        //     platform.body.setSize(platform.width * 0.5, platform.height * 0.5);
+
+        // // Crear las imágenes de las nubes en las posiciones especificadas
+        // cloudPositions1.forEach((position) => {
+        //     const cloud = this.clouds1.create(position.x, position.y, "cloud1").setScale(0.8);
         // });
+
+         const platformPositions = [
+             { x: 600, y: 520 },
+             { x: 1600, y: 520}
+             // Otras posiciones de plataformas aquí...
+         ];
+        
+         platformPositions.forEach((position) => {
+             const platform = this.platform.create(position.x, position.y, "platform4").setScale(0.8).refreshBody(0.5);
+             platform.body.setSize(platform.width * 0.7, platform.height * 0.7);
+         });
 
 
         // Agregar al jugador como un sprite físico
-        this.player = this.physics.add.sprite(200, 450, "dude").setScale(0.9).refreshBody(0.1);
+        this.player = this.physics.add.sprite(200, 450, "dude").setScale(0.9).refreshBody(0.5);
         this.player.setCollideWorldBounds();
         this.player.setBounce(0.2);
 
