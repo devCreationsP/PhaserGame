@@ -22,7 +22,7 @@ export class Game extends Phaser.Scene{
     create(){
 
         // Agregar una imagen de fondo
-        this.add.image(400, 300, "sky").setScale(3);
+        this.add.image(400, 300, "sky").setScale(0.5);
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
