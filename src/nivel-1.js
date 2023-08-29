@@ -10,33 +10,49 @@ class Game1 extends Phaser.Scene{
     // Precarga de recursos
     preload(){
         // Cargar imágenes y hojas de sprites
-        this.load.image("sky", "./assets/Nivel-i.png");
+        this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
-        this.load.spritesheet("dude", "./assets/prueba2-removebg.png",{ frameWidth: 32, frameHeight: 48 });
-        this.load.image("platform", "./assets/platform.png");
+        this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
+        this.load.image("platform4", "./assets/Bloque4.png");
+        this.load.image("platform2", "./assets/Bloque2.png");
+        this.load.image("platform1", "./assets/Bloque1.png");
+        this.load.image("floor", "./assets/PNivelII y IV.png")
         this.load.image("star", "./assets/star.png");
-        this.load.image("question", "./assets/quest.png");
+        this.load.image("question", "./assets/CajaPregunta.png");
     }
 
       // Creación de elementos al inicio del juego
     create(){
 
         // Agregar una imagen de fondo
-        this.add.image(0, 300, "sky").setScale(4,2);
+        this.add.image(0, 450, "sky").setScale(1,0.6);
+        this.add.image(600, 450, "sky").setScale(1,0.6);
+        this.add.image(1200, 450, "sky").setScale(1,0.6);
 
         // Crear un grupo estático de plataformas
         this.platform = this.physics.add.staticGroup();
-        this.platform.create(400, 568, "platform").setScale(12, 2).refreshBody();
-        this.platform.create(600, 400, "platform");
-        this.platform.create(50, 250, "platform");
-        this.platform.create(750, 220, "platform");
-        this.platform.create(1200, 400, "platform");
-        this.platform.create(1400, 200, "platform");
+        this.platform.create(0, 850, "floor").setScale(1, 2).refreshBody();
+        this.platform.create(400, 850, "floor").setScale(1, 2).refreshBody();
+        this.platform.create(800, 850, "floor").setScale(1, 2).refreshBody();
+        this.platform.create(1200, 850, "floor").setScale(1, 2).refreshBody();
+        this.platform.create(1200, 400, "platform2").setScale(0.7).refreshBody(0.5);
+
+        // const platformPositions = [
+        //     { x: 600, y: 500 },
+        //     { x: 1600, y: 500}
+        //     // Otras posiciones de plataformas aquí...
+        // ];
+        
+        // platformPositions.forEach(position => {
+        //     const platform = this.platforms.create(position.x, position.y, "platform4").setScale(0.7);
+        //     platform.body.setSize(platform.width * 0.5, platform.height * 0.5);
+        // });
+
 
         // Agregar al jugador como un sprite físico
-        this.player = this.physics.add.sprite(200, 450, "dude").setScale(1.2);
+        this.player = this.physics.add.sprite(200, 450, "dude").setScale(0.9).refreshBody(0.1);
         this.player.setCollideWorldBounds();
-        this.player.setBounce(0.3);
+        this.player.setBounce(0.2);
 
         // Crear animaciones para el jugador derecha izquierda y estatico
         this.anims.create({
@@ -105,9 +121,10 @@ class Game1 extends Phaser.Scene{
         //Interrogante para las preguntas
         this.question = this.physics.add.staticGroup();
         // Configura el temporizador para crear preguntas aleatorias cada 30 segundos
-        this.timer = setInterval(() => {
-            this.createRandomQuestion();
-        }, 30000); // 30 segundos en milisegundos = 30000
+        this.question.create(0, 500, "question").setScale(0.5).refreshBody();
+        // this.timer = setInterval(() => {
+        //     this.createRandomQuestion();
+        // }, 30000); // 30 segundos en milisegundos = 30000
 
         this.physics.add.collider(this.player, this.question, (player, question) => this.hitQuestion(player, question));
 
@@ -137,7 +154,7 @@ class Game1 extends Phaser.Scene{
 
         // Salto del jugador si está en el suelo y se presiona la tecla de arriba
         if(this.cursors.up.isDown && this.player.body.touching.down){
-            this.player.setVelocityY(-330);
+            this.player.setVelocityY(-400);
         }
     }
     
@@ -182,11 +199,11 @@ class Game1 extends Phaser.Scene{
         this.scene.launch('Pregunta');
         
     }
-    createRandomQuestion() {
-        const randomX = Math.random() * 1000; // Reemplaza "tuAncho" con el ancho de tu área de juego
-        const randomY = Math.random() * 500; // Reemplaza "tuAlto" con el alto de tu área de juego
-        this.question.create(randomX, randomY, "question").setScale(4);
-      }
+ //   createRandomQuestion() {
+ //       const randomX = Math.random() * 1000; // Reemplaza "tuAncho" con el ancho de tu área de juego
+ //       const randomY = Math.random() * 500; // Reemplaza "tuAlto" con el alto de tu área de juego
+ //       this.question.create(randomX, randomY, "question").setScale(4);
+ //     }
 }
 
 export default Game1;
