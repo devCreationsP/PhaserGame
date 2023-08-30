@@ -1,11 +1,12 @@
 // Definición de la clase Game que extiende Phaser.Scene
-class Game1 extends Phaser.Scene{
+export class Game1 extends Phaser.Scene{
     constructor() {
         super({key: 'game'});
         this.score = 0;
         this.scoreText;
         this.gameOver = false;
         this.moveCam = false;
+        this.gamePause = false
     }
     // Precarga de recursos
     preload(){
@@ -154,11 +155,11 @@ class Game1 extends Phaser.Scene{
         const cam = this.cameras.main;
 
         if(this.cursors.left.isDown){
-            this.player.setVelocityX(-160);
+            this.player.setVelocityX(-260);
             this.player.anims.play('left', true);
             cam.scrollX -= 4;
         }else if(this.cursors.right.isDown){
-            this.player.setVelocityX(160);
+            this.player.setVelocityX(260);
             this.player.anims.play('right', true);
             cam.scrollX += 4;
         }else{
@@ -221,7 +222,7 @@ class Game1 extends Phaser.Scene{
  //     }
 }
 
-export default Game1;
+
 
 
 
