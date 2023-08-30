@@ -14,7 +14,6 @@ export class Game1 extends Phaser.Scene{
         this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
         this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
-        this.load.image("turn2", "./assets/turn2.jpeg");
         this.load.image("platform4", "./assets/Bloque4.png");
         this.load.image("platform2", "./assets/Bloque2.png");
         this.load.image("platform1", "./assets/Bloque1.png");
@@ -67,7 +66,6 @@ export class Game1 extends Phaser.Scene{
         
          floor4.forEach((position) => {
              const platform = this.platform.create(position.x, position.y, "platform4").setScale(0.8).refreshBody(0.5);
-             platform.body.setSize(platform.width * 0.7, platform.height * 0.7);
          });
         //------------------------------------- Crear un grupo para las nubes -----------------------------------//
         this.clouds1 = this.physics.add.staticGroup();
@@ -196,7 +194,7 @@ export class Game1 extends Phaser.Scene{
             cam.scrollX += 4;
         }else{
             this.player.setVelocityX(0);
-            this.player.anims.play('turn');
+            this.player.anims.play('dude');
         }
 
 
