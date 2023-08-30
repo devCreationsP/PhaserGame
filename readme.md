@@ -11,4 +11,4 @@
 
 # Gráficos:
 ## Background: 1080 x 1920 px
-## Personajes Spritesheet: 60 x 360 px (60*40px)
+## Personajes Spritesheet: 1170 x 136 px (130*136px)

@@ -12,7 +12,7 @@ class Game1 extends Phaser.Scene{
         // Cargar imágenes y hojas de sprites
         this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
-        this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
+        this.load.spritesheet("dude", "./assets/Zombie.png",{ frameWidth: 130, frameHeight: 136 });
         this.load.image("turn2", "./assets/turn2.jpeg");
         this.load.image("platform4", "./assets/Bloque4.png");
         this.load.image("platform2", "./assets/Bloque2.png");
@@ -111,8 +111,8 @@ class Game1 extends Phaser.Scene{
 
         this.anims.create({
             key: "turn",
-            frames: [{key: "turn2", frame: 4}],
-            frameRate: 25,
+            frames: [{key: "dude", frame: 4}],
+            frameRate: 30,
         });
 
         this.anims.create({
