@@ -14,13 +14,16 @@ export class Game1 extends Phaser.Scene{
         this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
         this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
+        this.load.image("turn2", "./assets/turn2.jpeg");
         this.load.image("platform4", "./assets/Bloque4.png");
         this.load.image("platform2", "./assets/Bloque2.png");
         this.load.image("platform1", "./assets/Bloque1.png");
         this.load.image("floor", "./assets/PNivelII y IV.png")
         this.load.image("star", "./assets/star.png");
         this.load.image("question", "./assets/CajaPregunta.png");
-        this.load.image("Nube1", "./assets/Nube1.png");
+        this.load.image("cloud1", "./assets/Nube1.png");
+        this.load.image("bush1", "./assets/Arbusto1.png");
+        this.load.image("bush2", "./assets/Arbusto2.png");        
     }
 
       // Creación de elementos al inicio del juego
@@ -30,41 +33,70 @@ export class Game1 extends Phaser.Scene{
         this.add.image(0, 450, "sky").setScale(1,0.6);
         this.add.image(600, 450, "sky").setScale(1,0.6);
         this.add.image(1200, 450, "sky").setScale(1,0.6);
+        this.add.image(0, 650, "sky").setScale(1,0.6);
 
-        // Crear un grupo estático de plataformas
+    
+        //-------------------------------------- Crear un grupo estático de plataformas ---------------------------//
         this.platform = this.physics.add.staticGroup();
 
-        this.platform.create(0, 850, "floor").setScale(1, 2).refreshBody();
-        this.platform.create(400, 850, "floor").setScale(1, 2).refreshBody();
-        this.platform.create(800, 850, "floor").setScale(1, 2).refreshBody();
-        this.platform.create(1200, 850, "floor").setScale(1, 2).refreshBody();
-        this.platform.create(1200, 400, "platform2").setScale(0.7).refreshBody(0.5);
-                 // Crear un grupo para las nubes
-        // this.clouds1 = this.add.staticGroup();
+        const floorPositions = [
+            {x: 0, y: 850},
+            {x: 400, y: 850},
+            {x: 800, y: 850},
+            {x: 1200, y: 850},
+        ]
 
-        // // Definir las posiciones de las nubes
-        // const cloudPositions1 = [
-        //     { x: 600, y: 300 },
-        //     { x: 830, y: 300 }
-        // ];
+        floorPositions.forEach((position)=> {
+            const floor = this.platform.create(position.x, position.y, "floor").setScale(1,2).refreshBody();
+        })  
+        //------------------------------------- Crear plataforma de 2 bloques ----------------------------------//
+        const bricks2 = [
+            {x: 1200, y: 400 }
+        ]
 
-        // // Crear las imágenes de las nubes en las posiciones especificadas
-        // cloudPositions1.forEach((position) => {
-        //     const cloud = this.clouds1.create(position.x, position.y, "cloud1").setScale(0.8);
-        // });
-
-         const platformPositions = [
+        bricks2.forEach((position) => {
+            const platform = this.platform.create(position.x, position.y, "platform2").setScale(0.8).refreshBody(0.5)
+            platform.body.setSize(platform.width * 0.7, platform.height * 0.7);
+        })
+        //------------------------------------- Crear plataforma de 4 bloques -----------------------------------//
+         const floor4 = [
              { x: 600, y: 520 },
              { x: 1600, y: 520}
              // Otras posiciones de plataformas aquí...
          ];
         
-         platformPositions.forEach((position) => {
+         floor4.forEach((position) => {
              const platform = this.platform.create(position.x, position.y, "platform4").setScale(0.8).refreshBody(0.5);
              platform.body.setSize(platform.width * 0.7, platform.height * 0.7);
          });
+        //------------------------------------- Crear un grupo para las nubes -----------------------------------//
+        this.clouds1 = this.physics.add.staticGroup();
 
+        // Definir las posiciones de las nubes
+        const cloudPositions = [
+            { x: 600, y: 300 },
+            { x: 1500, y: 300 }
+        ];
+        cloudPositions.forEach((position) => {
+            const cloud = this.clouds1.create(position.x, position.y, "cloud1").setScale(0.8);
+        });
+        //------------------------------------- Crear un grupo para los arbustos --------------------------------//
 
+        this.bush1 = this.physics.add.staticGroup();
+        const bushPosition = [
+            { x: 470, y: 658 }
+        ]
+        bushPosition.forEach((position) => {
+            const bush = this.bush1.create(position.x, position.y, "bush1").setScale(0.8)
+        })
+        //------------------------------------- Crear un grupo para los arbustos --------------------------------//
+        const bushPosition2 = [
+            { x: 1270, y: 658 }
+        ]
+        bushPosition2.forEach((position) => {
+            const bush = this.bush1.create(position.x, position.y, "bush2").setScale(0.8)
+        })
+        //-------------------------------------------------------------------------------------------------------//
         // Agregar al jugador como un sprite físico
         this.player = this.physics.add.sprite(200, 450, "dude").setScale(0.9).refreshBody(0.5);
         this.player.setCollideWorldBounds();
@@ -74,20 +106,20 @@ export class Game1 extends Phaser.Scene{
         this.anims.create({
             key: "left",
             frames: this.anims.generateFrameNumbers("dude",{ start: 0, end: 3}),
-            frameRate: 10,
+            frameRate: 20,
             repeat: -1
         });
 
         this.anims.create({
             key: "turn",
-            frames: [{key: "dude", frame: 4}],
-            frameRate: 20,
+            frames: [{key: "turn2", frame: 4}],
+            frameRate: 25,
         });
 
         this.anims.create({
             key: "right",
             frames: this.anims.generateFrameNumbers("dude",{ start: 5, end: 8}),
-            frameRate: 10,
+            frameRate: 20,
             repeat: -1
         });
 
