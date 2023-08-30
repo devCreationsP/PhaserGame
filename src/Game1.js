@@ -1,11 +1,12 @@
 // Definición de la clase Game que extiende Phaser.Scene
-class Game1 extends Phaser.Scene{
+export class Game1 extends Phaser.Scene{
     constructor() {
         super({key: 'game'});
         this.score = 0;
         this.scoreText;
         this.gameOver = false;
         this.moveCam = false;
+        this.gamePause = false
     }
     // Precarga de recursos
     preload(){
@@ -13,7 +14,6 @@ class Game1 extends Phaser.Scene{
         this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
         this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
-        this.load.image("turn2", "./assets/turn2.jpeg");
         this.load.image("platform4", "./assets/Bloque4.png");
         this.load.image("platform2", "./assets/Bloque2.png");
         this.load.image("platform1", "./assets/Bloque1.png");
@@ -66,7 +66,6 @@ class Game1 extends Phaser.Scene{
         
          floor4.forEach((position) => {
              const platform = this.platform.create(position.x, position.y, "platform4").setScale(0.8).refreshBody(0.5);
-             platform.body.setSize(platform.width * 0.7, platform.height * 0.7);
          });
         //------------------------------------- Crear un grupo para las nubes -----------------------------------//
         this.clouds1 = this.physics.add.staticGroup();
@@ -186,16 +185,16 @@ class Game1 extends Phaser.Scene{
         const cam = this.cameras.main;
 
         if(this.cursors.left.isDown){
-            this.player.setVelocityX(-160);
+            this.player.setVelocityX(-260);
             this.player.anims.play('left', true);
             cam.scrollX -= 4;
         }else if(this.cursors.right.isDown){
-            this.player.setVelocityX(160);
+            this.player.setVelocityX(260);
             this.player.anims.play('right', true);
             cam.scrollX += 4;
         }else{
             this.player.setVelocityX(0);
-            this.player.anims.play('turn');
+            this.player.anims.play('dude');
         }
 
 
@@ -253,7 +252,7 @@ class Game1 extends Phaser.Scene{
  //     }
 }
 
-export default Game1;
+
 
 
 
