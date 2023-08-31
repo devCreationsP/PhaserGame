@@ -1,12 +1,12 @@
 // Definición de la clase Game que extiende Phaser.Scene
 export class Game1 extends Phaser.Scene{
     constructor() {
-        super({key: 'game'});
+        super({key: 'Game1'});
         this.score = 0;
         this.scoreText;
         this.gameOver = false;
         this.moveCam = false;
-        this.gamePause = false
+        this.gamePause = false;
     }
     // Precarga de recursos
     preload(){
@@ -22,18 +22,23 @@ export class Game1 extends Phaser.Scene{
         this.load.image("question", "./assets/CajaPregunta.png");
         this.load.image("cloud1", "./assets/Nube1.png");
         this.load.image("bush1", "./assets/Arbusto1.png");
-        this.load.image("bush2", "./assets/Arbusto2.png");        
+        this.load.image("bush2", "./assets/Arbusto2.png");
+
     }
 
       // Creación de elementos al inicio del juego
     create(){
 
-        // Agregar una imagen de fondo
-        this.add.image(0, 450, "sky").setScale(1,0.6);
-        this.add.image(600, 450, "sky").setScale(1,0.6);
-        this.add.image(1200, 450, "sky").setScale(1,0.6);
-        this.add.image(0, 650, "sky").setScale(1,0.6);
+        // -------------------------- Crear un grupo de imagenes para el cielo ------------------------------- //
+        const skyPositions = [
+            {x: 0, y: 450},
+            {x: 600, y: 450},
+            {x: 1200, y: 450},
+        ]
 
+        skyPositions.forEach((position)=> {
+            const sky = this.add.image(position.x, position.y, "sky").setScale(1, 0.6);
+        }) 
     
         //-------------------------------------- Crear un grupo estático de plataformas ---------------------------//
         this.platform = this.physics.add.staticGroup();
@@ -60,7 +65,7 @@ export class Game1 extends Phaser.Scene{
         //------------------------------------- Crear plataforma de 4 bloques -----------------------------------//
          const floor4 = [
              { x: 600, y: 520 },
-             { x: 1600, y: 520}
+             { x: 1700, y: 520}
              // Otras posiciones de plataformas aquí...
          ];
         
@@ -110,7 +115,7 @@ export class Game1 extends Phaser.Scene{
 
         this.anims.create({
             key: "turn",
-            frames: [{key: "turn2", frame: 4}],
+            frames: [{key: "dude", frame: 4}],
             frameRate: 25,
         });
 
@@ -122,29 +127,13 @@ export class Game1 extends Phaser.Scene{
         });
 
         //con esta linea de codigo se le da gravedad al elemento que se escoja
-        // this.player.body.setGravityY(1000);
+        this.player.body.setGravityY(500);
 
         // Agregar colisión entre el jugador y las plataformas
         this.physics.add.collider(this.player, this.platform);
         // Crear cursores para el control del jugador
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // Creacion de grupo de estrellas
-        this.stars = this.physics.add.group({
-            key: 'star',
-            repeat: 20,
-            setXY: {x: 12, y:0, stepX: 70}
-        })
-        // Función para que las estrellas tengan el efecto Bounce
-        this.stars.children.iterate(function(child) {
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
-        })
-        // Colisión con las plataformas creadas
-        this.physics.add.collider(this.stars, this.platform)
-
-        // Hacer desaparecer las estrellas cuando el personaje pasa por encima
-        
-        this.physics.add.overlap(this.player, this.stars, (player, star) => this.collectStar(player,star))
         // Se setea el puntaje en la p (x , y) , text ,  json { tamaño  y color}
         
         this.scoreText = this.add.text(16, 16, 'Score : 0', { fontSize: '18px', fill:'white'})
@@ -167,7 +156,7 @@ export class Game1 extends Phaser.Scene{
         //Interrogante para las preguntas
         this.question = this.physics.add.staticGroup();
         // Configura el temporizador para crear preguntas aleatorias cada 30 segundos
-        this.question.create(0, 500, "question").setScale(0.5).refreshBody();
+        this.question.create(100, 500, "question").setScale(0.5).refreshBody();
         // this.timer = setInterval(() => {
         //     this.createRandomQuestion();
         // }, 30000); // 30 segundos en milisegundos = 30000
@@ -185,22 +174,22 @@ export class Game1 extends Phaser.Scene{
         const cam = this.cameras.main;
 
         if(this.cursors.left.isDown){
-            this.player.setVelocityX(-260);
+            this.player.setVelocityX(-220);
             this.player.anims.play('left', true);
             cam.scrollX -= 4;
         }else if(this.cursors.right.isDown){
-            this.player.setVelocityX(260);
+            this.player.setVelocityX(220);
             this.player.anims.play('right', true);
             cam.scrollX += 4;
         }else{
             this.player.setVelocityX(0);
-            this.player.anims.play('dude');
+            this.player.anims.play('turn');
         }
 
 
         // Salto del jugador si está en el suelo y se presiona la tecla de arriba
         if(this.cursors.up.isDown && this.player.body.touching.down){
-            this.player.setVelocityY(-400);
+            this.player.setVelocityY(-650);
         }
     }
     
@@ -245,6 +234,25 @@ export class Game1 extends Phaser.Scene{
         this.scene.launch('Pregunta');
         
     }
+       
+    generateStars() {
+        this.stars = this.physics.add.group({
+            key: 'star',
+            repeat: 20,
+            setXY: {x: 12, y:0, stepX: 70}
+        })
+
+        // Función para que las estrellas tengan el efecto Bounce
+        this.stars.children.iterate(function(child) {
+            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
+        })
+        // Colisión con las plataformas creadas
+        this.physics.add.collider(this.stars, this.platform)
+
+        // Hacer desaparecer las estrellas cuando el personaje pasa por encima
+        
+        this.physics.add.overlap(this.player, this.stars, (player, star) => this.collectStar(player,star))
+    }    
  //   createRandomQuestion() {
  //       const randomX = Math.random() * 1000; // Reemplaza "tuAncho" con el ancho de tu área de juego
  //       const randomY = Math.random() * 500; // Reemplaza "tuAlto" con el alto de tu área de juego

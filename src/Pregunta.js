@@ -54,10 +54,18 @@ export class Pregunta extends Phaser.Scene{
             opcionText.setInteractive({ useHandCursor: true });
             opcionText.on('pointerdown', () => {
                 opcionText.setColor('#00ff00'); // Cambiar a verde (#00ff00)
-                        // Cerrar la escena después de 5 segundos
-            setTimeout(() => {
-                this.scene.stop('Pregunta'); // Detener la escena
-            }, 3000); // 5000 milisegundos = 5 segundos  
+
+                // Obtener referencia a la escena game1
+                const game1Scene = this.scene.get('Game1');
+
+                // Llamar a la función para generar estrellas en game1
+                game1Scene.generateStars();
+
+                // Cerrar la escena después de 5 segundos
+                setTimeout(() => {
+                    this.scene.stop('Pregunta'); // Detener la escena
+                }, 3000); // 5000 milisegundos = 5 segundos 
+                
             });
 
     
