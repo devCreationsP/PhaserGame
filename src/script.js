@@ -4,7 +4,7 @@ import {Pregunta} from './Pregunta'
 
 // Configuración del juego
 const config = {
-    width: 1280,
+    width: 1920,
     height: 720,
     parent: "container",
     type: Phaser.AUTO,
