@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 // Definición de la clase Game que extiende Phaser.Scene
 export class Pregunta extends Phaser.Scene{
     constructor() {
