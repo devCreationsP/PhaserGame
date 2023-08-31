@@ -1,6 +1,6 @@
-// Importa la clase 'Game' desde el archivo game.js
-import  {Game1}  from './Game1';
-import {Pregunta} from './Pregunta'
+import Phaser from 'phaser';
+import { Game1 } from './src/Game1.js'
+import { Pregunta } from './src/Pregunta.js'
 
 // Configuración del juego
 const config = {
@@ -20,9 +20,13 @@ const config = {
     }
 }
 
-var score = 0;
-var scoreText = '';
 // Crear una nueva instancia del juego con la configuración proporcionada
 var game = new Phaser.Game(config);
+
+
+
+
+
+
 
 
