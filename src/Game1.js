@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 // Definición de la clase Game que extiende Phaser.Scene
 export class Game1 extends Phaser.Scene{
     constructor() {
@@ -110,7 +111,7 @@ export class Game1 extends Phaser.Scene{
 
         this.anims.create({
             key: "turn",
-            frames: [{key: "turn2", frame: 4}],
+            frames: [{key: "dude", frame: 4}],
             frameRate: 25,
         });
 
@@ -194,7 +195,7 @@ export class Game1 extends Phaser.Scene{
             cam.scrollX += 4;
         }else{
             this.player.setVelocityX(0);
-            this.player.anims.play('dude');
+            this.player.anims.play('turn');
         }
 
 
@@ -251,8 +252,3 @@ export class Game1 extends Phaser.Scene{
  //       this.question.create(randomX, randomY, "question").setScale(4);
  //     }
 }
-
-
-
-
-

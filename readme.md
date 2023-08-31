@@ -1,7 +1,6 @@
-# Hacer npm install sobre la carpeta PHASERDEMO
-
-# para iniciar el servidor utilizar el siguiente comando
-## npx es-dev-server --node-resolve --watch
+# Vite implemented :
+# npm install
+# command start : npm run dev
 
 # Material de donde saque el contenido del codigo
 ## https://www.youtube.com/watch?v=8YUXg3nKSN4&t=139s
