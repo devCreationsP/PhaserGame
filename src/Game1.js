@@ -15,7 +15,7 @@ export class Game1 extends Phaser.Scene{
         this.load.image("sky", "./assets/Nivel I.png");
         this.load.image("bomb", "./assets/bomb.png");
         this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
-        this.load.image("platform4", "./assets/Bloque4.png");
+        this.load.image("platform4", "./assets/Bloque4.png"); 
         this.load.image("platform2", "./assets/Bloque2.png");
         this.load.image("platform1", "./assets/Bloque1.png");
         this.load.image("floor", "./assets/PNivelII y IV.png")
