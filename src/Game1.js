@@ -24,6 +24,7 @@ export class Game1 extends Phaser.Scene{
         this.load.image("cloud1", "./public/sprites/Nube1.png");
         this.load.image("bush1", "./public/sprites/Arbusto1.png");
         this.load.image("bush2", "./public/sprites/Arbusto2.png");        
+
     }
 
       // Creación de elementos al inicio del juego
