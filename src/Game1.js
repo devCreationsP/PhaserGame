@@ -12,18 +12,18 @@ export class Game1 extends Phaser.Scene{
     // Precarga de recursos
     preload(){
         // Cargar imágenes y hojas de sprites
-        this.load.image("sky", "./assets/Nivel I.png");
-        this.load.image("bomb", "./assets/bomb.png");
-        this.load.spritesheet("dude", "./assets/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
-        this.load.image("platform4", "./assets/Bloque4.png");
-        this.load.image("platform2", "./assets/Bloque2.png");
-        this.load.image("platform1", "./assets/Bloque1.png");
-        this.load.image("floor", "./assets/PNivelII y IV.png")
-        this.load.image("star", "./assets/star.png");
-        this.load.image("question", "./assets/CajaPregunta.png");
-        this.load.image("cloud1", "./assets/Nube1.png");
-        this.load.image("bush1", "./assets/Arbusto1.png");
-        this.load.image("bush2", "./assets/Arbusto2.png");        
+        this.load.image("sky", "./public/sprites/Nivel I.png");
+        this.load.image("bomb", "./public/sprites/bomb.png");
+        this.load.spritesheet("dude", "./public/sprites/Personajes2.png",{ frameWidth: 131, frameHeight: 137 });
+        this.load.image("platform4", "./public/sprites/Bloque4.png");
+        this.load.image("platform2", "./public/sprites/Bloque2.png");
+        this.load.image("platform1", "./public/sprites/Bloque1.png");
+        this.load.image("floor", "./public/sprites/PNivelII y IV.png")
+        this.load.image("star", "./public/sprites/star.png");
+        this.load.image("question", "./public/sprites/CajaPregunta.png");
+        this.load.image("cloud1", "./public/sprites/Nube1.png");
+        this.load.image("bush1", "./public/sprites/Arbusto1.png");
+        this.load.image("bush2", "./public/sprites/Arbusto2.png");        
     }
 
       // Creación de elementos al inicio del juego
